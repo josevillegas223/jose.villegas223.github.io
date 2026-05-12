@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LumenHogar | Energia clara para tu hogar</title>
+  <link rel="stylesheet" href="eco-mapa3d.css">
+</head>
+<body class="eco-app-page">
+  <aside class="eco-app-sidebar">
+    <div class="eco-app-brand">
+      <div class="eco-app-brand-mark">LH</div>
+      <div>
+        <h1>LumenHogar</h1>
+        <span>Energia clara para vivir mejor</span>
+      </div>
+    </div>
+
+    <p class="eco-app-brand-copy">Visualiza el gasto electrico de tu casa, ordena tus aparatos por habitaciones y detecta oportunidades de ahorro con un plano interactivo.</p>
+
+    <nav class="eco-app-nav" aria-label="Secciones de la pagina">
+      <button type="button" class="active" data-section-target="inicio">Inicio</button>
+      <button type="button" data-section-target="registro">Registro</button>
+      <button type="button" data-section-target="aparatos">Aparatos</button>
+      <button type="button" data-section-target="consumo">Consumo</button>
+      <button type="button" data-section-target="reportes">Reportes</button>
+      <button type="button" data-section-target="mapa">Mapa</button>
+    </nav>
+
+    <div class="eco-app-side-card">
+      <strong>Ruta sugerida</strong>
+      <p>Completa el perfil del hogar, agrega tus aparatos y ubicalos dentro del mapa para recibir un reporte mucho mas preciso.</p>
+    </div>
+  </aside>
+
+  <main class="eco-app-main">
+    <section class="eco-app-hero">
+      <div class="eco-app-hero-shell">
+        <div class="eco-app-hero-copy-col">
+          <p class="eco-app-chip">Panel residencial inteligente</p>
+          <h2 data-hero-title>Haz visible la energia de tu casa</h2>
+          <p data-hero-copy>Empieza con el perfil del hogar, registra aparatos con nombres personalizados y observa como cambia el consumo al ubicarlos dentro del plano.</p>
+          <div class="eco-app-hero-actions">
+            <button type="button" class="eco-app-button" data-jump="registro">Crear perfil</button>
+            <button type="button" class="eco-app-button secondary" data-jump="mapa">Ver mapa</button>
+            <button type="button" class="eco-app-button secondary" data-action="load-sample">Cargar ejemplo</button>
+          </div>
+        </div>
+
+        <div class="eco-app-hero-metrics">
+          <article class="eco-app-hero-metric">
+            <span>Consumo actual</span>
+            <strong id="heroMetricTotal">0 kWh/mes</strong>
+          </article>
+          <article class="eco-app-hero-metric">
+            <span>Costo estimado</span>
+            <strong id="heroMetricCost">$0 MXN</strong>
+          </article>
+          <article class="eco-app-hero-metric">
+            <span>Zona principal</span>
+            <strong id="heroMetricRoom">Sin datos</strong>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="eco-app-section active" data-section="inicio">
+      <div class="eco-app-grid">
+        <article class="eco-app-panel">
+          <h3>Lo que hace LumenHogar</h3>
+          <div class="eco-app-summary" id="homeSummary">Aun no hay informacion guardada. Empieza creando el perfil del hogar y agregando tus primeros aparatos.</div>
+
+          <div class="eco-app-cards">
+            <div class="eco-app-card">
+              <strong>Perfil del hogar</strong>
+              <span>Contextualiza el analisis con tipo de vivienda, personas y meta de ahorro.</span>
+            </div>
+            <div class="eco-app-card">
+              <strong>Mapa por habitaciones</strong>
+              <span>Ubica cada aparato dentro del espacio donde realmente se usa.</span>
+            </div>
+            <div class="eco-app-card">
+              <strong>Lectura accionable</strong>
+              <span>Convierte datos de consumo en prioridades claras para decidir que optimizar primero.</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="eco-app-panel">
+          <h3>Preparacion del sistema</h3>
+          <div class="eco-app-steps">
+            <div class="eco-app-step" id="setupProfile">
+              <span class="eco-app-step-dot"></span>
+              <div>
+                <strong>Perfil de vivienda</strong>
+                <p>Define el contexto del hogar para personalizar el seguimiento.</p>
+              </div>
+            </div>
+            <div class="eco-app-step" id="setupDevices">
+              <span class="eco-app-step-dot"></span>
+              <div>
+                <strong>Inventario de aparatos</strong>
+                <p>Registra los equipos con nombre, potencia y horas de uso.</p>
+              </div>
+            </div>
+            <div class="eco-app-step" id="setupMap">
+              <span class="eco-app-step-dot"></span>
+              <div>
+                <strong>Plano de habitaciones</strong>
+                <p>Coloca los aparatos en el mapa para identificar zonas saturadas.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="eco-app-kpis">
+            <div class="eco-app-kpi">
+              <span>Consumo total</span>
+              <strong id="homeTotal">0 kWh/mes</strong>
+            </div>
+            <div class="eco-app-kpi">
+              <span>Aparatos</span>
+              <strong id="homeCount">0 aparatos</strong>
+            </div>
+            <div class="eco-app-kpi">
+              <span>Zona principal</span>
+              <strong id="homeTopRoom">Sin datos</strong>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="eco-app-section" data-section="registro">
+      <div class="eco-app-grid">
+        <article class="eco-app-panel">
+          <h3>Perfil del hogar</h3>
+          <div class="eco-app-form">
+            <div class="eco-app-form-grid">
+              <label>
+                Nombre
+                <input id="userName" placeholder="Ej. Ana Lopez">
+              </label>
+              <label>
+                Tipo de vivienda
+                <select id="userHomeType">
+                  <option value="">Selecciona una opcion</option>
+                  <option value="Casa">Casa</option>
+                  <option value="Departamento">Departamento</option>
+                  <option value="Duplex">Duplex</option>
+                </select>
+              </label>
+              <label>
+                Personas en casa
+                <input id="userMembers" type="number" min="1" placeholder="Ej. 4">
+              </label>
+              <label>
+                Ciudad
+                <input id="userCity" placeholder="Ej. Puebla">
+              </label>
+              <label>
+                Tipo de tarifa
+                <select id="userRatePlan">
+                  <option value="">Selecciona una tarifa</option>
+                  <option value="Basica">Basica</option>
+                  <option value="Intermedia">Intermedia</option>
+                  <option value="Alta demanda">Alta demanda</option>
+                </select>
+              </label>
+              <label>
+                Meta mensual (kWh)
+                <input id="userMonthlyGoal" type="number" min="50" placeholder="Ej. 220">
+              </label>
+            </div>
+            <label>
+              Objetivo de ahorro
+              <select id="userGoal">
+                <option value="">Selecciona una meta</option>
+                <option value="Reducir costo">Reducir costo</option>
+                <option value="Reducir CO2">Reducir CO2</option>
+                <option value="Mejorar habitos">Mejorar habitos</option>
+              </select>
+            </label>
+            <button type="button" class="eco-app-button" id="saveUserButton">Guardar informacion</button>
+          </div>
+        </article>
+
+        <article class="eco-app-panel">
+          <h3>Lectura del perfil</h3>
+          <div class="eco-app-summary" id="userProfileSummary">Todavia no hay informacion guardada del usuario.</div>
+
+          <div class="eco-app-kpis">
+            <div class="eco-app-kpi">
+              <span>Vivienda</span>
+              <strong id="userProfileType">Sin definir</strong>
+            </div>
+            <div class="eco-app-kpi">
+              <span>Objetivo</span>
+              <strong id="userProfileGoal">Sin definir</strong>
+            </div>
+            <div class="eco-app-kpi">
+              <span>Tarifa</span>
+              <strong id="userProfileRate">Sin definir</strong>
+            </div>
+            <div class="eco-app-kpi">
+              <span>Meta mensual</span>
+              <strong id="userProfileTarget">Sin definir</strong>
+            </div>
+          </div>
+
+          <div class="eco-app-note" id="userReadiness">Completa el perfil para que la plataforma pueda contextualizar mejor el consumo del hogar.</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="eco-app-section" data-section="aparatos">
+      <div class="eco-app-grid">
+        <article class="eco-app-panel">
+          <div class="eco-app-inline-head">
+            <h3>Agregar aparato</h3>
+            <span id="appDeviceCount">0 registrados</span>
+          </div>
+
+          <div class="eco-app-quick-presets" id="quickPresetList"></div>
+
+          <div class="eco-app-form">
+            <div class="eco-app-form-grid">
+              <label>
+                Preset
+                <select id="devicePreset"></select>
+              </label>
+              <label>
+                Habitacion
+                <select id="deviceRoom"></select>
+              </label>
+              <label>
+                Nombre personalizado
+                <input id="deviceName" placeholder="Ej. TV principal">
+              </label>
+              <label>
+                Potencia (W)
+                <input id="devicePower" type="number" min="1" placeholder="Ej. 120">
+              </label>
+              <label>
+                Horas por dia
+                <input id="deviceHours" type="number" min="0.1" step="0.1" placeholder="Ej. 5">
+              </label>
+              <label>
+                Dias por mes
+                <input id="deviceDays" type="number" min="1" max="31" value="30">
+              </label>
+            </div>
+            <button type="button" class="eco-app-button" id="addDeviceButton">Agregar al hogar</button>
+            <div class="eco-app-note" id="deviceFormNote">Puedes partir de un preset y despues ponerle el nombre que tu quieras.</div>
+          </div>
+        </article>
+
+        <article class="eco-app-panel">
+          <h3>Inventario actual</h3>
+          <div class="eco-app-list" id="appDeviceList"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="eco-app-section" data-section="consumo">
+      <div class="eco-app-grid">
+        <article class="eco-app-panel">
+          <h3>Lectura energetica</h3>
+          <div class="eco-app-kpis">
+            <div class="eco-app-kpi">
+              <span>Total estimado</span>
+              <strong id="consumptionTotal">0 kWh/mes</strong>
+            </div>
+            <div class="eco-app-kpi">
+              <span>Costo estimado</span>
+              <strong id="consumptionCost">$0 MXN</strong>
+            </div>
+            <div class="eco-app-kpi">
+              <span>Habitacion mas cargada</span>
+              <strong id="consumptionRoom">Sin datos</strong>
+            </div>
+            <div class="eco-app-kpi">
+              <span>Nivel actual</span>
+              <strong id="consumptionLevel">Base</strong>
+            </div>
+          </div>
+
+          <div class="eco-app-note" id="consumptionInsight">Agrega aparatos para comenzar el analisis de consumo.</div>
+        </article>
+
+        <article class="eco-app-panel">
+          <h3>Distribucion por habitacion</h3>
+          <div class="eco-app-bars" id="consumptionBars"></div>
+        </article>
+
+        <article class="eco-app-panel">
+          <h3>Aparatos de mayor impacto</h3>
+          <div class="eco-app-list" id="consumptionTopDevices"></div>
+        </article>
+
+        <article class="eco-app-panel">
+          <h3>Lectura por zonas</h3>
+          <div class="eco-app-list" id="consumptionRoomCards"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="eco-app-section" data-section="reportes">
+      <div class="eco-app-grid">
+        <article class="eco-app-panel">
+          <h3>Reporte estrategico</h3>
+          <div class="eco-app-kpis">
+            <div class="eco-app-kpi">
+              <span>Costo</span>
+              <strong id="reportCost">$0 MXN</strong>
+            </div>
+            <div class="eco-app-kpi">
+              <span>CO2</span>
+              <strong id="reportCO2">0 kg</strong>
+            </div>
+            <div class="eco-app-kpi">
+              <span>Aparato principal</span>
+              <strong id="reportTopDevice">Sin datos</strong>
+            </div>
+            <div class="eco-app-kpi">
+              <span>Zona critica</span>
+              <strong id="reportTopRoom">Sin datos</strong>
+            </div>
+          </div>
+          <div class="eco-app-summary" id="reportSummaryText">Agrega aparatos para generar recomendaciones automaticas.</div>
+        </article>
+
+        <article class="eco-app-panel">
+          <h3>Acciones sugeridas</h3>
+          <ul class="eco-app-tips" id="reportTips"></ul>
+        </article>
+
+        <article class="eco-app-panel">
+          <h3>Focos prioritarios</h3>
+          <div class="eco-app-list" id="reportRoomFocus"></div>
+        </article>
+
+        <article class="eco-app-panel">
+          <h3>Siguiente paso recomendado</h3>
+          <div class="eco-app-note" id="reportNextStep">Cuando agregues aparatos, aqui aparecera la prioridad principal a trabajar.</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="eco-app-section" data-section="mapa">
+      <div class="eco-app-panel eco-app-panel-map">
+        <div
+          id="mainMapRoot"
+          data-eco-mapa3d-root
+          data-eco-mapa-mode="full"
+          data-eco-mapa-persist="false"
+        ></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="eco-mapa3d.js"></script>
+  <script src="eco-consumo-app.js"></script>
+</body>
+</html>
